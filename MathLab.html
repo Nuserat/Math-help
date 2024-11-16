@@ -1,0 +1,916 @@
+<html>
+
+<head>
+    <title> SAMPLE PAGE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+        }
+
+        header {
+            background: #0078d7;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 1em;
+        }
+
+        nav button {
+            margin: 10px 20px;
+            padding: 10px 15px;
+            border: none;
+            background: #005bb5;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        nav button:hover {
+            background: #003c82;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .calculator-section {
+            display: none;
+        }
+
+        .calculator-section.active {
+            display: block;
+        }
+
+        .input-area {
+            margin: 40px 0;
+        }
+
+        input,
+        textarea,
+        button {
+            padding: 10px;
+            margin: 5px;
+            width: 60%;
+            max-width: 270px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #0078d7;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background: #005bb5;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            margin-top: 40px;
+            max-width: 100%;
+        }
+
+        #keyboard {
+            margin-top: 20px;
+            padding: 3px;
+        }
+
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3px;
+        }
+
+        .keyboard button {
+            padding: 10px;
+            margin: 5px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 18px;
+            color: #005bb5;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .keyboard button:hover {
+            background: #d9d9d9;
+        }
+
+        .keyboard button:active {
+            background: #bfbfbf;
+        }
+
+
+        .sheader {
+            background-color: #FFFFFF;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-top: 20px;
+            margin: 0 auto;
+            display: inline-block;
+            width: 950px;
+            text-align: left;
+
+        }
+
+        ul {
+            list-style-type: none;
+            background-color: #0F0310;
+            margin-bottom: 0px;
+            color: white;
+            margin-top: 2%;
+            padding: 0px;
+            overflow: hidden;
+            margin-left: -10px;
+            margin-right: -10px;
+            z-index: 1;
+            position: sticky;
+            top: 0px;
+        }
+
+        li {
+            display: inline;
+            float: right;
+            font-family: Lucida Handwriting;
+        }
+
+        a:link,
+        a:visited {
+            color: white;
+            padding: 17px 35px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        a:hover,
+        a:active {
+            background-color: black;
+            color: rgba(212, 70, 153, 0.9);
+        }
+
+        #myInput {
+            background-image: url('/css/search.jng');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        .input {
+            overflow: visible;
+            display: block;
+            padding: 8px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid gray;
+        }
+
+        .dropbtn {
+            cursor: pointer;
+            min-width: 260px;
+        }
+
+        .dropbtn:hover,
+        .dropbtn:focus {
+            background-color: #2980B9;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 260px;
+            overflow: left;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body style="text-align: center; background-color: #abb7c2;">
+
+    <div class="sheader">
+        <header>
+            <h4>Welcome To</h4>
+            <h1>Advanced Calculator</h1>
+            <h5>TRUE || FALSE</h5>
+            <nav>
+                <button onclick="switchTab('matrices')">Matrices</button>
+                <button onclick="switchTab('vector')">Vector</button>
+                <button onclick="switchTab('graphical')">Graphical</button>
+                <button onclick="switchTab('logic')">Logic Gates</button>
+                <button onclick="switchTab('linearAlgebra')">Linear Algebra</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Basic Math Section -->
+            <section id="matrices" class="calculator-section active">
+                <h2>Matrices Operation</h2>
+                <!--     <h5>ADDITION || SUBSTRUCTION || MULTIPLICATION|| INVERSE || DETERMINANT </h5>   -->
+                <div class="input-area">
+                    <textarea id="matrix1" placeholder="Enter Matrix 1"></textarea>
+                    <textarea id="matrix2" placeholder="Enter Matrix 2"></textarea>
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Continue</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <li><a class="dropdown-item" onclick="performOperation('addition')">ADDITION</a></li>
+                            <li><a class="dropdown-item" onclick="performOperation('subtraction')">SUBTRACTION</a></li>
+                            <li><a class="dropdown-item" onclick="performOperation('multiplication')">MULTIPLICATION</a>
+                            </li>
+                            <li><a class="dropdown-item" onclick="performOperation('inverse')">INVERSE</a></li>
+                            <li><a class="dropdown-item" onclick="performOperation('determinant')">DETERMINANT</a></li>
+                        </div>
+                    </div>
+                </div>
+                <div class="result" id="basic-result"></div>
+            </section>
+
+            <!-- Scientific Section -->
+            <section id="scientific" class="calculator-section">
+                <h2>Scientific Calculator</h2>
+                <div class="input-area">
+                    <input type="text" id="scientific-input" placeholder="Enter scientific expression">
+                    <button onclick="calculateScientific()">Calculate</button>
+                </div>
+                <div class="result" id="scientific-result"></div>
+            </section>
+
+            <!-- Graphical Section -->
+            <section id="graphical" class="calculator-section">
+                <h2>Graphical Calculator</h2>
+                <h5>Math.sin(x) or x**3 will appear as a cubic curve.</h5>
+                <canvas id="graphCanvas" width="900" height="600"></canvas>
+                <div class="input-area">
+                    <input type="text" id="graph-input" placeholder="Enter function (e.g., x^2)">
+                    <button onclick="plotGraph()">Plot</button>
+                </div>
+            </section>
+
+
+            <!-- Logic Gates Section -->
+            <section id="logic" class="calculator-section">
+                <h2>Logic Gates</h2>
+                <div class="input-area">
+                    <input type="text" id="logic-input" placeholder="Enter logic (e.g., A && B)">
+                    <button onclick="calculateLogic()">Calculate</button>
+                </div>
+                <div class="result" id="logic-result"></div>
+            </section>
+
+            <!-- Linear Algebra Section -->
+            <section id="linearAlgebra" class="calculator-section">
+                <h2>Linear Algebra</h2>
+                <div class="input-area">
+                    <textarea id="matrix1" placeholder="Enter Matrix 1"></textarea>
+                    <textarea id="matrix2" placeholder="Enter Matrix 1"></textarea>
+                    <button onclick="calculateMatrix()">Calculate</button>
+                </div>
+                <div class="result" id="matrix-result"></div>
+            </section>
+        </main>
+        <section id="keyboard">
+            <h2>Math Keyboard</h2>
+            <input type="text" id="display" placeholder="Enter any expression" />
+            <button class="btn equals" onclick="calculate()">Calculate</button>
+            <div class="keyboard">
+                <button class="btn" onclick="appendToDisplay('(')">(</button>
+                <button class="btn" onclick="appendToDisplay(')')">)</button>
+                <button class="btn" onclick="clearDisplay()">C</button>
+                <button class="btn" onclick="appendToDisplay('[')">[</button>
+                <button class="btn" onclick="appendToDisplay(']')">]</button>
+                <button class="btn operator" onclick="calculatePercentage()">%</button>
+                <!-- Scientific Buttons -->
+                <button class="btn operator" onclick="appendToDisplay('sin(')">sin</button>
+                <button class="btn operator" onclick="appendToDisplay('cos(')">cos</button>
+                <button class="btn operator" onclick="appendToDisplay('tan(')">tan</button>
+                <button class="btn operator" onclick="appendToDisplay('log(')">log</button>
+                <button class="btn operator" onclick="appendToDisplay('sqrt(')">√</button>
+                <button class="btn operator" onclick="appendToDisplay('**')">^</button>
+                <button class="btn operator" onclick="appendToDisplay('pi')">π</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.log10(')">log10</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.log(')">ln</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.pow(')">x^y</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.acos(')">acos</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.asin(')">asin</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.atan(')">atan</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.acosh(')">acosh</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.asinh(')">asinh</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.atanh(')">atanh</button>
+                <button class="btn operator" onclick="appendToDisplay('Math.cbrt(')">cbrt</button>
+                <!-- Scientific Buttons -->
+                <button class="btn operator" onclick="appendToDisplay('/')">/</button>
+                <button class="btn" onclick="appendToDisplay('7')">7</button>
+                <button class="btn" onclick="appendToDisplay('8')">8</button>
+                <button class="btn" onclick="appendToDisplay('9')">9</button>
+                <button class="btn operator" onclick="appendToDisplay('*')">*</button>
+                <button class="btn" onclick="appendToDisplay('4')">4</button>
+                <button class="btn" onclick="appendToDisplay('5')">5</button>
+                <button class="btn" onclick="appendToDisplay('6')">6</button>
+                <button class="btn operator" onclick="appendToDisplay('+')">+</button>
+                <button class="btn" onclick="appendToDisplay('1')">1</button>
+                <button class="btn" onclick="appendToDisplay('2')">2</button>
+                <button class="btn" onclick="appendToDisplay('3')">3</button>
+                <button class="btn operator" onclick="appendToDisplay('-')">-</button>
+                <button class="btn" onclick="appendToDisplay('0')">0</button>
+                <button class="btn" onclick="appendToDisplay('.')">.</button>
+                <button class="btn equals" onclick="calculate()">=</button>
+
+            </div>
+        </section>
+        <script>
+            // Logic Gates
+            function calculateLogic() {
+                const input = document.getElementById('logic-input').value;
+                try {
+                    const result = eval(input);
+                    document.getElementById('logic-result').textContent = `Result: ${result}`;
+                } catch {
+                    document.getElementById('logic-result').textContent = 'Invalid logic!';
+                }
+            }
+
+            // Linear Algebra
+ // Matrix Calculation
+ function calculateLogic() {
+  const input = document.getElementById('logic-input').value;
+  try {
+    const result = eval(input);
+    document.getElementById('logic-result').textContent = `Result: ${result}`;
+  } catch {
+    document.getElementById('logic-result').textContent = 'Invalid logic!';
+  }
+}
+
+// Matrix Calculation
+function calculateMatrix() {
+  try {
+    // Get the matrices from the input fields
+    const matrix1 = JSON.parse(document.getElementById('matrix1').value);
+    const matrix2 = JSON.parse(document.getElementById('matrix2').value);
+
+    // Ensure matrices have the same dimensions
+    if (matrix1.length !== matrix2.length || matrix1[0].length !== matrix2[0].length) {
+      throw new Error("Matrices must have the same dimensions!");
+    }
+
+    // Adding the matrices
+    const result = matrix1.map((row, i) =>
+      row.map((val, j) => val + matrix2[i][j])
+    );
+
+    document.getElementById('matrix-result').textContent = `Result: ${JSON.stringify(result)}`;
+  } catch (error) {
+    document.getElementById('matrix-result').textContent = 'Invalid matrix input!';
+  }
+}
+
+function ex() {
+                // Define the possible truth values (0 is false, 1 is true)
+                const values = [0, 1];
+
+                // Header for the table
+                console.log("A | B | AND | OR | XOR | XNOR | NOR | NOT A | NOT B");
+                console.log("--------------------------------------------");
+
+                // Loop through all combinations of A and B (0 or 1)
+                for (let A of values) {
+                    for (let B of values) {
+                        const andResult = A && B;
+                        const orResult = A || B;
+                        const xorResult = A !== B;  // XOR is true if A and B are different
+                        const xnorResult = !(A !== B);  // XNOR is true if A and B are the same
+                        const norResult = !(A || B);  // NOR is true if neither A nor B is true
+                        const notA = !A;
+                        const notB = !B;
+
+                        // Build the truth table as a string
+                        let truthTable = `<h3>Truth Table</h3>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>AND</th>
+                    <th>OR</th>
+                    <th>XOR</th>
+                    <th>XNOR</th>
+                    <th>NOR</th>
+                    <th>NOT A</th>
+                    <th>NOT B</th>
+                </tr>
+                <tr>
+                    <td>${A}</td>
+                    <td>${B}</td>
+                    <td>${andResult}</td>
+                    <td>${orResult}</td>
+                    <td>${xorResult}</td>
+                    <td>${xnorResult}</td>
+                    <td>${norResult}</td>
+                    <td>${notA}</td>
+                    <td>${notB}</td>
+                </tr>
+            </table>
+        `;
+
+                        // Print each row of the truth table
+                        let result1 = console.log(`${A} | ${B} |  ${andResult}  |  ${orResult}  |  ${xorResult}  |  ${xnorResult}  |  ${norResult}  |   ${notA}   |   ${notB}`);
+                        const result = eval(result1);
+
+                        document.getElementById('basic-result').textContent = `Result: ${result}`;
+                    }
+                }
+            }
+
+            // Call the function to generate and print the truth table
+            ex();
+
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+
+            // Display input
+            function appendToDisplay(value) {
+                document.getElementById('display').value += value;
+            }
+
+            // Clear the display
+            function clearDisplay() {
+                document.getElementById('display').value = '';
+            }
+
+            // Calculate percentage
+            function calculatePercentage() {
+                const display = document.getElementById('display');
+                let expression = display.value;
+
+                // If the current input is something like "200 %", it means calculate 200% of a number
+                if (expression.includes('%')) {
+                    expression = expression.replace('%', '').trim(); // Clean any extra spaces
+                    // Calculate percentage (e.g., 200 * 20% = 40)
+                    display.value = (parseFloat(expression) / 100) * parseFloat(display.value);
+                } else {
+                    // If no '%' symbol is found, we just multiply by 100 to convert to percentage
+                    display.value = parseFloat(display.value) * 100 + '%'; // Convert to percentage
+                }
+            }
+
+            // Evaluate the expression
+            function calculate() {
+                const display = document.getElementById('display');
+                const input = document.getElementById('basic-input').value;
+                let expression = display.value;
+                try {
+                    expression = expression.replace(/sin\(/g, "Math.sin(")
+                        .replace(/cos\(/g, "Math.cos(")
+                        .replace(/tan\(/g, "Math.tan(")
+                        .replace(/log\(/g, "Math.log10(")
+                        .replace(/sqrt\(/g, "Math.sqrt(")
+                        .replace(/\^/g, "**")
+                        .replace(/pi/g, "Math.PI")
+                        .replace(/Math.log10\(/g, "Math.log10(")       // Logarithm base 10
+                        .replace(/Math.log\(/g, "Math.log(")           // Natural logarithm (ln)
+                        .replace(/Math.pow\(/g, "Math.pow(")           // Power function
+                        .replace(/Math.acos\(/g, "Math.acos(")         // Arccosine
+                        .replace(/Math.asin\(/g, "Math.asin(")         // Arcsine
+                        .replace(/Math.atan\(/g, "Math.atan(")         // Arctangent
+                        .replace(/Math.acosh\(/g, "Math.acosh(")       // Hyperbolic Arccosine
+                        .replace(/Math.asinh\(/g, "Math.asinh(")       // Hyperbolic Arcsine
+                        .replace(/Math.atanh\(/g, "Math.atanh(")       // Hyperbolic Arctangent
+                        .replace(/Math.cbrt\(/g, "Math.cbrt(")
+                    // Evaluate the expression using eval
+                    display.value = eval(expression);
+                    const result = eval(expression);
+                    document.getElementById('basic-result').textContent = `Result: ${result}`;
+                } catch (error) {
+                    display.value = 'Error';
+                }
+            }
+
+            // Switch tabs
+            function switchTab(tabId) {
+                const sections = document.querySelectorAll('.calculator-section');
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            }
+
+            // Basic Math
+            function performOperation(operation) {
+                let result;
+                try {
+                    // Call the appropriate matrix operation based on the selected operation
+                    if (operation === 'addition') {
+                        result = addMatrices(matrix1, matrix2);
+                    } else if (operation === 'subtraction') {
+                        result = subtractMatrices(matrix1, matrix2);
+                    } else if (operation === 'multiplication') {
+                        result = multiplyMatrices(matrix1, matrix2);
+                    } else if (operation === 'inverse') {
+                        result = inverse(matrix1);  // Example for inverse of matrixA
+                    } else if (operation === 'determinant') {
+                        result = determinant(matrix1);  // Example for determinant of matrixA
+                    }
+
+                    // Display the result in the result div
+                    document.getElementById('basic-result').innerHTML = JSON.stringify(result);
+                } catch (error) {
+                    document.getElementById('basic-result').innerHTML = `Error: ${error.message}`;
+                }
+            }
+
+
+            // Scientific Calculator
+            function calculateScientific() {
+                const input = document.getElementById('scientific-input').value;
+                try {
+                    // Sanitize input to allow only valid mathematical expressions
+                    const sanitizedInput = input
+                        .replace(/sin|cos|tan|log|ln|sqrt|\^|Math\.pow|e/g, match => match) // prevent eval issues
+                        .replace(/[^-()\d/*+.e^sin|cos|tan|log|ln|sqrt]/g, '')  // Strip out invalid characters
+
+                    // Validate that the input is well-formed
+                    const valid = /^[\d\+\-\*\/\(\)\.\^sin|cos|tan|log|ln|sqrte]+$/.test(sanitizedInput);
+                    if (!valid) throw new Error('Invalid characters detected!');
+
+                    // Use eval safely with math expression
+                    const result = eval(sanitizedInput);
+
+                    // Display the result
+                    document.getElementById('scientific-result').textContent = `Result: ${result}`;
+                } catch (error) {
+                    // Display error message if the input is invalid
+                    document.getElementById('scientific-result').textContent = 'Invalid input!';
+                }
+            }
+
+
+
+            // Plot graph for a given mathematical expression
+            function plotGraph() {
+                const input = document.getElementById('graph-input').value;
+                const canvas = document.getElementById('graphCanvas');
+                const ctx = canvas.getContext('2d');
+                const width = canvas.width;
+                const height = canvas.height;
+
+                // Clear the previous graph
+                ctx.clearRect(0, 0, width, height);
+
+                if (!input) {
+                    alert("Please enter a valid mathematical expression to plot.");
+                    return;
+                }
+
+                // Prepare the x and y values for plotting
+                let xValues = [];
+                let yValues = [];
+                const range = 10; // Range of x-axis from -10 to 10
+                const scaleX = width / (2 * range); // Scaling factor for x-axis
+                const scaleY = height / (2 * range); // Scaling factor for y-axis
+
+                // Loop to calculate x and y values from -10 to 10
+                for (let i = -range; i <= range; i += 0.1) {  // Create an x-range from -10 to 10 with 0.1 interval
+                    let x = i;
+                    let y;
+                    try {
+                        //Math.sin(x) Enter x**3: The graph of y = x^3 will appear as a cubic curve.
+                        // Replace 'x' in the expression with the actual x value
+                        let expr = input.replace(/x/g, `(${x})`);
+                        y = eval(expr);  // Evaluate the expression for the given x
+                        xValues.push(x);
+                        yValues.push(y);
+                    } catch (error) {
+                        // If an error occurs while evaluating the expression, skip this point
+                        continue;
+                    }
+                }
+
+                // Plot the graph on the canvas
+                ctx.beginPath();
+                ctx.moveTo(xValues[0] * scaleX + width / 2, -yValues[0] * scaleY + height / 2); // Start point
+
+                // Draw line to the next points
+                for (let i = 1; i < xValues.length; i++) {
+                    let x = xValues[i];
+                    let y = yValues[i];
+                    ctx.lineTo(x * scaleX + width / 2, -y * scaleY + height / 2);
+                }
+
+                ctx.stroke();  // Draw the lines on the canvas
+
+                // Optionally, draw axis lines (x=0 and y=0)
+                ctx.beginPath();
+                ctx.moveTo(0, height / 2);
+                ctx.lineTo(width, height / 2);  // X-axis
+                ctx.moveTo(width / 2, 0);
+                ctx.lineTo(width / 2, height);  // Y-axis
+                ctx.strokeStyle = 'gray';
+                ctx.stroke();
+            }
+
+
+            // Function to add two matrices
+            function addMatrices(matrix1, matrix2) {
+                const rows = matrix1.length;
+                const cols = matrix1[0].length;
+
+                // Ensure matrices have the same dimensions
+                if (matrix1.length !== matrix2.length || matrix1[0].length !== matrix2[0].length) {
+                    throw new Error('Matrices must have the same dimensions for addition!');
+                }
+
+                const result = [];
+                for (let i = 0; i < rows; i++) {
+                    const row = [];
+                    for (let j = 0; j < cols; j++) {
+                        row.push(matrix1[i][j] + matrix2[i][j]);
+                    }
+                    result.push(row);
+                }
+                return result;
+            }
+
+            // Function to subtract two matrices
+            function subtractMatrices(matrix1, matrix2) {
+                const rows = matrix1.length;
+                const cols = matrix1[0].length;
+
+                // Ensure matrices have the same dimensions
+                if (matrix1.length !== matrix2.length || matrix1[0].length !== matrix2[0].length) {
+                    throw new Error('Matrices must have the same dimensions for subtraction!');
+                }
+
+                const result = [];
+                for (let i = 0; i < rows; i++) {
+                    const row = [];
+                    for (let j = 0; j < cols; j++) {
+                        row.push(matrix1[i][j] - matrix2[i][j]);
+                    }
+                    result.push(row);
+                }
+                return result;
+            }
+
+            // Function to multiply two matrices
+            function multiplyMatrices(matrix1, matrix2) {
+                const rowsA = matrix1.length;
+                const colsA = matrix1[0].length;
+                const rowsB = matrix2.length;
+                const colsB = matrix2[0].length;
+
+                // Ensure matrix multiplication is possible
+                if (colsA !== rowsB) {
+                    throw new Error('Number of columns in Matrix A must equal number of rows in Matrix B for multiplication!');
+                }
+
+                const result = [];
+                for (let i = 0; i < rowsA; i++) {
+                    const row = [];
+                    for (let j = 0; j < colsB; j++) {
+                        let sum = 0;
+                        for (let k = 0; k < colsA; k++) {
+                            sum += matrix1[i][k] * matrix2[k][j];
+                        }
+                        row.push(sum);
+                    }
+                    result.push(row);
+                }
+                return result;
+            }
+
+            // Function to calculate the determinant of a matrix (only works for square matrices)
+            function determinant(matrix) {
+                const n = matrix.length;
+                if (n !== matrix[0].length) {
+                    throw new Error('Matrix must be square to calculate determinant!');
+                }
+
+                if (n === 2) {
+                    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+                }
+
+                let det = 0;
+                for (let i = 0; i < n; i++) {
+                    const subMatrix = matrix.slice(1).map(row => row.filter((_, j) => j !== i));
+                    det += matrix[0][i] * ((i % 2 === 0 ? 1 : -1) * determinant(subMatrix));
+                }
+                return det;
+            }
+
+            // Function to calculate the inverse of a matrix (only works for square matrices with non-zero determinant)
+            function inverse(matrix) {
+                const n = matrix.length;
+                const det = determinant(matrix);
+
+                if (det === 0) {
+                    throw new Error('Matrix is singular, cannot calculate inverse.');
+                }
+
+                if (n === 2) {
+                    const invDet = 1 / det;
+                    return [
+                        [matrix[1][1] * invDet, -matrix[0][1] * invDet],
+                        [-matrix[1][0] * invDet, matrix[0][0] * invDet],
+                    ];
+                }
+
+                // For larger matrices, use adjugate method or Gaussian elimination (implementation omitted for brevity)
+                return [];
+            }
+            // Function to compute dot product of two vectors
+            function dotProduct(vectorA, vectorB) {
+                if (vectorA.length !== vectorB.length) {
+                    throw new Error('Vectors must have the same length for dot product!');
+                }
+
+                return vectorA.reduce((sum, val, index) => sum + val * vectorB[index], 0);
+            }
+
+            // Function to compute cross product of two 3D vectors
+            function crossProduct(vectorA, vectorB) {
+                if (vectorA.length !== 3 || vectorB.length !== 3) {
+                    throw new Error('Cross product is only defined for 3D vectors!');
+                }
+
+                return [
+                    vectorA[1] * vectorB[2] - vectorA[2] * vectorB[1],
+                    vectorA[2] * vectorB[0] - vectorA[0] * vectorB[2],
+                    vectorA[0] * vectorB[1] - vectorA[1] * vectorB[0],
+                ];
+            }
+
+            // Function to compute magnitude (length) of a vector
+            function magnitude(vector) {
+                return Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0));
+            }
+
+            // Function to solve a system of linear equations using Gaussian elimination
+            function gaussianElimination(matrix, b) {
+                const n = matrix.length;
+                const augmentedMatrix = matrix.map((row, i) => [...row, b[i]]);
+
+                // Forward elimination
+                for (let i = 0; i < n; i++) {
+                    // Find the pivot
+                    let maxRow = i;
+                    for (let j = i + 1; j < n; j++) {
+                        if (Math.abs(augmentedMatrix[j][i]) > Math.abs(augmentedMatrix[maxRow][i])) {
+                            maxRow = j;
+                        }
+                    }
+
+                    // Swap rows
+                    [augmentedMatrix[i], augmentedMatrix[maxRow]] = [augmentedMatrix[maxRow], augmentedMatrix[i]];
+
+                    // Eliminate variables below the pivot
+                    for (let j = i + 1; j < n; j++) {
+                        const factor = augmentedMatrix[j][i] / augmentedMatrix[i][i];
+                        for (let k = i; k < n + 1; k++) {
+                            augmentedMatrix[j][k] -= factor * augmentedMatrix[i][k];
+                        }
+                    }
+                }
+
+                // Back substitution
+                const solution = Array(n).fill(0);
+                for (let i = n - 1; i >= 0; i--) {
+                    solution[i] = augmentedMatrix[i][n] / augmentedMatrix[i][i];
+                    for (let j = i - 1; j >= 0; j--) {
+                        augmentedMatrix[j][n] -= augmentedMatrix[j][i] * solution[i];
+                    }
+                }
+
+                return solution;
+            }
+
+            function parseMatrix(input) {
+                return input.split(';').map(row => row.split(',').map(Number));
+            }
+
+
+        </script>
+</body>
+
+</html>
+
+<!--
+
+<div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Continue</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <li><a class="dropdown-item" onclick="performOperation('addition')">ADDITION</a></li>
+                            <li><a class="dropdown-item" onclick="performOperation('subtraction')">SUBTRACTION</a></li>
+                            <li><a class="dropdown-item" onclick="performOperation('multiplication')">MULTIPLICATION</a>
+                            </li>
+                            <li><a class="dropdown-item" onclick="performOperation('inverse')">INVERSE</a></li>
+                            <li><a class="dropdown-item" onclick="performOperation('determinant')">DETERMINANT</a></li>
+                        </div>
+                    </div>
+
+
+
+   <form class="container">
+                <input class="input animate-input" type="text" style="width:135px"><br>
+                <input class="input border animate-input" type="text" style="width:30%">
+              </form>
+
+              .animate-input{
+    transition: width .4s ease-in-out;
+}
+.border{
+    border: 1px solid #ccc !important  ;
+}
+.border:hover{
+    width:100%;
+}
+         // Graphical Calculator
+            function plotGraph() {
+                const input = document.getElementById('graph-input').value;
+                const canvas = document.getElementById('graphCanvas');
+                const ctx = canvas.getContext('2d');
+                const width = canvas.width = 900;
+                const height = canvas.height = 800;
+
+                ctx.clearRect(0, 0, width, height);
+                ctx.beginPath();
+                ctx.moveTo(0, height / 2);
+
+                for (let x = -width / 2; x < width / 2; x++) {
+                    const scaledX = x / 20;
+                    const y = eval(input.replace(/x/g, scaledX));
+                    const scaledY = height / 2 - y * 20;
+                    ctx.lineTo(x + width / 2, scaledY);
+                }
+                ctx.stroke();
+            }
+
+            step by step
+
+            <form>
+    <label for="matrixA">Matrix A (comma-separated values for each row):</label><br>
+    <input type="text" id="matrixA" placeholder="e.g. 1,2,3;4,5,6;7,8,9"><br>
+    
+    <label for="matrix2">Matrix B (comma-separated values for each row):</label><br>
+    <input type="text" id="matrix2" placeholder="e.g. 1,2,3;4,5,6;7,8,9"><br>
+    
+    <button type="button" onclick="performMatrixOperations()">Perform Operations</button>
+</form>
+<div id="result"></div>
+
+
+-->
